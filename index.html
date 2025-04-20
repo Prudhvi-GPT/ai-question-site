@@ -1,75 +1,63 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Answer Comparison</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-      background-color: #f2f2f2;
-    }
-    h1 {
-      text-align: center;
-    }
-    #questionForm {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    #answers {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-      max-width: 1000px;
-      margin: auto;
-    }
-    .answer-box {
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
-    .model-name {
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-  </style>
+  <title>Ask AI Models</title>
 </head>
+
 <body>
+
   <h1>Ask a Question to 4 AI Models</h1>
-  <div id="questionForm">
-    <input type="text" id="question" placeholder="Type your question here" size="50" />
-    <button onclick="submitQuestion()">Ask</button>
-  </div>
-  <div id="answers">
-    <div class="answer-box">
-      <div class="model-name">GPT-4</div>
-      <div id="gpt4-answer">Answer will appear here...</div>
-    </div>
-    <div class="answer-box">
-      <div class="model-name">Claude</div>
-      <div id="claude-answer">Answer will appear here...</div>
-    </div>
-    <div class="answer-box">
-      <div class="model-name">Gemini</div>
-      <div id="gemini-answer">Answer will appear here...</div>
-    </div>
-    <div class="answer-box">
-      <div class="model-name">Mistral</div>
-      <div id="mistral-answer">Answer will appear here...</div>
-    </div>
-  </div>
+
+  <form id="question-form">
+    <input type="text" id="user-question" placeholder="Type your question here" required />
+    <button type="submit">Ask</button>
+  </form>
+
+  <h3>GPT-4</h3>
+  <div id="gpt4">Answer will appear here...</div>
+
+  <h3>Claude</h3>
+  <div id="claude">Answer will appear here...</div>
+
+  <h3>Gemini</h3>
+  <div id="gemini">Answer will appear here...</div>
+
+  <h3>Mistral</h3>
+  <div id="mistral">Answer will appear here...</div>
 
   <script>
-    function submitQuestion() {
-      const question = document.getElementById("question").value;
-      document.getElementById("gpt4-answer").innerText = `Searching for: "${question}"... (demo)`;
-      document.getElementById("claude-answer").innerText = `Searching for: "${question}"... (demo)`;
-      document.getElementById("gemini-answer").innerText = `Searching for: "${question}"... (demo)`;
-      document.getElementById("mistral-answer").innerText = `Searching for: "${question}"... (demo)`;
-    }
+    const form = document.getElementById('question-form');
+    const input = document.getElementById('user-question');
+
+    const gptDiv = document.getElementById('gpt4');
+    const claudeDiv = document.getElementById('claude');
+    const geminiDiv = document.getElementById('gemini');
+    const mistralDiv = document.getElementById('mistral');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const question = input.value;
+
+      gptDiv.innerText = claudeDiv.innerText = geminiDiv.innerText = mistralDiv.innerText = "Loading...";
+
+      const response = await fetch("https://eoipmh9754npcu.m.pipedream.net", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ question })
+      });
+
+      const data = await response.json();
+
+      gptDiv.innerText = data.gpt4 || "No response from GPT-4";
+      claudeDiv.innerText = data.claude || "No response from Claude";
+      geminiDiv.innerText = data.gemini || "No response from Gemini";
+      mistralDiv.innerText = data.mistral || "No response from Mistral";
+
+      input.value = '';
+    });
   </script>
+
 </body>
 </html>
