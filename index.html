@@ -1,0 +1,75 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Answer Comparison</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #f2f2f2;
+    }
+    h1 {
+      text-align: center;
+    }
+    #questionForm {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    #answers {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+    .answer-box {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    .model-name {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Ask a Question to 4 AI Models</h1>
+  <div id="questionForm">
+    <input type="text" id="question" placeholder="Type your question here" size="50" />
+    <button onclick="submitQuestion()">Ask</button>
+  </div>
+  <div id="answers">
+    <div class="answer-box">
+      <div class="model-name">GPT-4</div>
+      <div id="gpt4-answer">Answer will appear here...</div>
+    </div>
+    <div class="answer-box">
+      <div class="model-name">Claude</div>
+      <div id="claude-answer">Answer will appear here...</div>
+    </div>
+    <div class="answer-box">
+      <div class="model-name">Gemini</div>
+      <div id="gemini-answer">Answer will appear here...</div>
+    </div>
+    <div class="answer-box">
+      <div class="model-name">Mistral</div>
+      <div id="mistral-answer">Answer will appear here...</div>
+    </div>
+  </div>
+
+  <script>
+    function submitQuestion() {
+      const question = document.getElementById("question").value;
+      document.getElementById("gpt4-answer").innerText = `Searching for: "${question}"... (demo)`;
+      document.getElementById("claude-answer").innerText = `Searching for: "${question}"... (demo)`;
+      document.getElementById("gemini-answer").innerText = `Searching for: "${question}"... (demo)`;
+      document.getElementById("mistral-answer").innerText = `Searching for: "${question}"... (demo)`;
+    }
+  </script>
+</body>
+</html>
